@@ -92,6 +92,7 @@ def logout_view(request):
 # #--------------------------------------- category Start ------------------------
 @login_required(login_url='/')
 def home_view(request):
+    messages.success(request, 'Success! Login completed.')
     if request.method == 'POST':
         name = request.POST.get('name')
         subject = request.POST.get('subject')
@@ -110,7 +111,7 @@ def home_view(request):
             
         return redirect('home')
     
-    students = Student.objects.all().order_by('id')
+    students = Student.objects.all().order_by('-id')
     subjects = Student.objects.values_list('subject', flat=True).distinct()
     
     student_filter = StudentFilter(request.GET, queryset=students)
