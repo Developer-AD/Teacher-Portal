@@ -1,9 +1,14 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth import login, logout, authenticate
+from django.views.decorators.http import require_http_methods
 from django.contrib.auth.decorators import login_required, user_passes_test
 from django.contrib import messages
 from django.http import HttpResponse
+from django.core.paginator import Paginator
+from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from .models import Student
+from .filters import StudentFilter
+
 
 from django.contrib.auth import get_user_model
 MyUser = get_user_model()
@@ -92,12 +97,6 @@ def home_view(request):
         subject = request.POST.get('subject')
         mark = request.POST.get('mark')
 
-        print('-'*100)
-        print(name)
-        print(subject)
-        print(mark)
-        print('-'*100)
-
         student = Student.objects.filter(name=name, subject=subject).first()
 
         if student:
@@ -111,62 +110,64 @@ def home_view(request):
             
         return redirect('home')
     
-    students = Student.objects.all()
-    # category_filter = CategoryFilter(request.GET, queryset=students)
+    students = Student.objects.all().order_by('id')
+    subjects = Student.objects.values_list('subject', flat=True).distinct()
     
+    student_filter = StudentFilter(request.GET, queryset=students)
 
     # Pagination.
-    # page = request.GET.get('page', 1)
-    # paginator = Paginator(cate, 15)
-    # try:
-    #     page_items = paginator.page(page)
-    # except PageNotAnInteger:
-    #     page_items = paginator.page(1)
-    # except EmptyPage:
-    #     page_items = paginator.page(paginator.num_pages)
+    page = request.GET.get('page', 1)
+    paginator = Paginator(student_filter.qs, 10)
+    try:
+        page_items = paginator.page(page)
+    except PageNotAnInteger:
+        page_items = paginator.page(1)
+    except EmptyPage:
+        page_items = paginator.page(paginator.num_pages)
 
     contexts = { 
-        # 'filter':category_filter, 
-        # 'page_items':page_items,
-          'students':students 
+        'filter':student_filter, 
+        'page_items':page_items,
+        'subjects':subjects
           }
     
     return render(request, 'home.html', contexts)
 
 
+# ----------------------------------- Student record update -----------------------------------
+@require_http_methods(["POST"])
+def student_update(request, pk):
+    student = get_object_or_404(Student, pk=pk)
+    if request.method == 'POST':
+        try:
+            name = request.POST.get('name')            
+            subject = request.POST.get('subject')            
+            mark = request.POST.get('mark')
 
-# # ----------------------------------- Student update -----------------------------------
-
-# @require_http_methods(["POST"])
-# def category_update(request, pk):
-
-#     category = get_object_or_404(Category, pk=pk)
-#     if request.method == 'POST':
-#         try:
-#             name = request.POST.get('name')            
-#             category.name = name
-#             category.save()
-
-#             messages.success(request, 'Success! Category name updated successfully')
+            student_exists = Student.objects.filter(name=name, subject=subject).first()
+            if student_exists:
+                messages.error(request, 'Error! Student already exists.')
+            else:
+                student.name = name
+                student.subject = subject
+                student.mark = mark
+                student.save()
+                messages.success(request, 'Success! Student record updated')
             
-#         except Exception as e:
-#             messages.error(request, 'Failed to update category name')
+        except Exception as e:
+            messages.error(request, 'Failed to update category name')
     
-#     return redirect('category')
-
-# # ----------------------------------- Category delete -----------------------------------
+    return redirect('home')
 
 
-# def category_delete(request, pk):
-#     try:
-#         category = get_object_or_404(Category, pk=pk)
-#         category.delete()
+# ----------------------------------- Student record delete -----------------------------------
+def student_delete(request, pk):
+    try:
+        student = get_object_or_404(Student, pk=pk)
+        student.delete()
         
-#         messages.success(request, f'Success! Category deleted successfully.')
+        messages.success(request, f'Success! Student record deleted.')
         
-#     except Exception as e:
-#         messages.error(request, 'Category Delete failed')
-#     return redirect('category')
-
-
-# #--------------------------------------- category end------------------------
+    except Exception as e:
+        messages.error(request, 'Error! Student record delete failed')
+    return redirect('home')

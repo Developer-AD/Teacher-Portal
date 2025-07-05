@@ -8,6 +8,6 @@ urlpatterns = [
 
     # ---------------------------- Category URLs ------------------------------
     # path('category/', views.category, name='category'),
-    # path('category/<int:pk>/update/', views.category_update, name='category_update'),
-    # path('category/<int:pk>/delete/', views.category_delete, name='category_delete'),
+    path('student/<int:pk>/update/', views.student_update, name='student_update'),
+    path('student/<int:pk>/delete/', views.student_delete, name='student_delete'),
 ]

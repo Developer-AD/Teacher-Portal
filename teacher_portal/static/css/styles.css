@@ -188,6 +188,7 @@ body {
 .Search-FC-Section-left {
     display: flex;
     align-items: center;
+    gap: 1rem;
 }
 
 .Search-FC-Section-left form {
@@ -245,6 +246,7 @@ body {
     border: 1px solid #ddd;
     border-radius: 5px;
     font-size: 1rem;
+    width: 100%;
 }
 
 /* Table Styles */
