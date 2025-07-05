@@ -1,11 +1,12 @@
 from django.shortcuts import render, redirect, get_object_or_404
-from django.contrib.auth import get_user_model
-MyUser = get_user_model()
 from django.contrib.auth import login, logout, authenticate
 from django.contrib.auth.decorators import login_required, user_passes_test
 from django.contrib import messages
 from django.http import HttpResponse
+from .models import Student
 
+from django.contrib.auth import get_user_model
+MyUser = get_user_model()
 
 # Create your views here.
 def TeacherRole(user):
@@ -86,12 +87,35 @@ def logout_view(request):
 # #--------------------------------------- category Start ------------------------
 @login_required(login_url='/')
 def home_view(request):
-    
-    # category = Category.objects.all()
-    # category_filter = CategoryFilter(request.GET, queryset=category)
-    # cate=category_filter.qs
+    if request.method == 'POST':
+        name = request.POST.get('name')
+        subject = request.POST.get('subject')
+        mark = request.POST.get('mark')
 
-    # # Pagination.
+        print('-'*100)
+        print(name)
+        print(subject)
+        print(mark)
+        print('-'*100)
+
+        student = Student.objects.filter(name=name, subject=subject).first()
+
+        if student:
+            student.mark=mark
+            student.save()
+
+            messages.success(request, 'Success! Student marks updated.')
+        else:
+            Student.objects.create(name=name, subject=subject, mark=mark)
+            messages.success(request, 'Success! Student new record created.')
+            
+        return redirect('home')
+    
+    students = Student.objects.all()
+    # category_filter = CategoryFilter(request.GET, queryset=students)
+    
+
+    # Pagination.
     # page = request.GET.get('page', 1)
     # paginator = Paginator(cate, 15)
     # try:
@@ -101,25 +125,17 @@ def home_view(request):
     # except EmptyPage:
     #     page_items = paginator.page(paginator.num_pages)
 
-    # contexts={ 'filter':category_filter, 'page_items':page_items, 'category':category }
+    contexts = { 
+        # 'filter':category_filter, 
+        # 'page_items':page_items,
+          'students':students 
+          }
     
-   
-    # if request.method == 'POST':
-
-    #     name = request.POST.get('category')
-    #     print('name',name)
-    #     if Category.objects.filter(name=name).exists():
-    #         messages.error(request,'Category name already exists!...')
-    #         return redirect('category')
-    #     Category.objects.create(name=name)
-        
-    #     return redirect('category')
-    
-    return render(request, 'home.html')
+    return render(request, 'home.html', contexts)
 
 
 
-# # ----------------------------------- Category update -----------------------------------
+# # ----------------------------------- Student update -----------------------------------
 
 # @require_http_methods(["POST"])
 # def category_update(request, pk):
