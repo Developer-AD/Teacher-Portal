@@ -294,6 +294,12 @@ body {
     transition: all 0.2s;
 }
 
+.action-buttons {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+}
+
 .edit-btn {
     background: #f39c12;
     color: white;

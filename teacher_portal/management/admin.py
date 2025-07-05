@@ -7,6 +7,10 @@ from django.contrib.auth import get_user_model
 MyUser = get_user_model()
 
 
+admin.site.site_header = "tailwebs."
+admin.site.site_title = "tailwebs."
+admin.site.index_title = "Welcome to the tailwebs admin dashboard"
+
 # Register your models here.
 class CustomUserAdmin(UserAdmin):
     list_display = ('username', 'email', 'first_name', 'role', 'is_staff')

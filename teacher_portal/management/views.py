@@ -19,68 +19,40 @@ def TeacherRole(user):
 
 
 def login_view(request):
-    if request.method == 'POST':
-        username = request.POST.get('username')
-        password = request.POST.get('password')
+    try:
+        if request.method == 'POST':
+            username = request.POST.get('username')
+            password = request.POST.get('password')
 
-        # logger.info(f'Login attempt for username - {username}')
+            user = MyUser.objects.filter(username=username)
+            if not user.exists():
+                messages.error(request, "Error! Username does not exist.")
+                return redirect('login')
 
-        user = MyUser.objects.filter(username=username)
-        # if not user.exists():
-        #     # logger.warning(f'User not found - {username}')
-        #     messages.error(request, 'Error! User not found. Please try again.')
-        #     return redirect('login')
+            print('----------- Login Start ------------') 
+            print(username)
+            print(password)
+            print(user)
+            print('------------ Login End -------------')
 
+            user = authenticate(username=username, password=password)
 
-        print('----------- Login Start ------------') 
-        print(username)
-        print(password)
-        print(user)
-        print('------------ Login End -------------')
-
-        user = authenticate(username=username, password=password)
-
-        if user is not None:
-            # logger.info(f'User authenticated - {username}')
-
-            # print(f"TENANT of Request : {request.tenant}")
-            # print(f"TENANT of User : {user.tenant}")
-
-
-            # Recapcha authentication.
-            # SITE_KEY = request.POST['g-recaptcha-response']
-            # capchaData = {
-            #     'secret': settings.RECAPTCHA_PRIVATE_KEY,
-            #     'response': SITE_KEY
-            # }
-
-            post_url = 'https://www.google.com/recaptcha/api/siteverify'
-
-            try:
-                # res = requests.post(post_url, data=capchaData)
-                # verify = res.json()['success']
-                # logger.info(f'INFO : reCAPTCHA verification result - {verify}')
-
-                # if verify:
-                if True:
-                    if user.role == MyUser.Role.TEACHER:
-                        login(request, user)
-                        return redirect(request.GET.get('next',"home"))                    
-
+            if user is not None:
+                if user.role == MyUser.Role.TEACHER:
+                    login(request, user)
+                    messages.success(request, 'Success! You have logged in.')
+                    return redirect(request.GET.get('next',"home"))
                 else:
-                    logger.warning(f'Invalid reCAPTCHA for user - {username}')
-                    messages.error(request, 'Error! Invalid Captcha. Please try again.')
-
-            except Exception as e:
-                # logger.error(f'Something went wrong - [Login from a Specific Tenant not Public] {str(e)}')
-                messages.error(request, 'Error! Something went wrong.')
-        
+                    messages.error(request, 'Error! You are not authorized to log in.')   
+            else:
+                messages.error(request, 'Error! Passwords do not match.')
 
 
-    contexts = {
-        # 'RECAPTCHA_PUBLIC_KEY':settings.RECAPTCHA_PUBLIC_KEY 
-    }
-    return render(request, 'login.html', contexts)
+
+    except Exception as e:
+        messages.error(request, 'Error! Something went wrong.')
+
+    return render(request, 'login.html')
 
 
 def logout_view(request):
@@ -92,7 +64,6 @@ def logout_view(request):
 # #--------------------------------------- category Start ------------------------
 @login_required(login_url='/')
 def home_view(request):
-    messages.success(request, 'Success! Login completed.')
     if request.method == 'POST':
         name = request.POST.get('name')
         subject = request.POST.get('subject')
@@ -145,7 +116,7 @@ def student_update(request, pk):
             subject = request.POST.get('subject')            
             mark = request.POST.get('mark')
 
-            student_exists = Student.objects.filter(name=name, subject=subject).first()
+            student_exists = Student.objects.filter(name=name, subject=subject).exclude(id=pk).first()
             if student_exists:
                 messages.error(request, 'Error! Student already exists.')
             else:
@@ -156,7 +127,7 @@ def student_update(request, pk):
                 messages.success(request, 'Success! Student record updated')
             
         except Exception as e:
-            messages.error(request, 'Failed to update category name')
+            messages.error(request, 'Failed to update student')
     
     return redirect('home')
 
