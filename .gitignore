@@ -1,0 +1,17 @@
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Django migrations
+**/migrations/__pycache__/
+**/migrations/*.pyc
+
+# SQLite database (optional)
+# *.sqlite3
+
+# Environment variables
+.env
+
+# VSCode and PyCharm settings
+.vscode/
+.idea/
