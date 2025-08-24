@@ -152,3 +152,13 @@ STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static')]
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 AUTH_USER_MODEL = 'management.MyUser'
+
+print(f"*"*100)
+print(f"================: Print ENV Var :=================")
+print(f"DEBUG - {DEBUG}")
+print(f"NAME - {env('NAME')}")
+print(f"USER - {env('USER')}")
+print(f"PASSWORD - {env('PASSWORD')}")
+print(f"HOST - {env('HOST')}")
+print(f"PORT - {env('PORT')}")
+print(f"*"*100)
