@@ -12,7 +12,14 @@ https://docs.djangoproject.com/en/5.1/ref/settings/
 
 from pathlib import Path
 import os
+import environ
 
+# setup env variables.
+env = environ.Env(
+    # set casting, default value
+    DEBUG=(bool, False),
+    TIME_ZONE=(str, "Asia/Kolkata")
+)
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -21,11 +28,16 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/5.1/howto/deployment/checklist/
 
+
+# Take environment variables from .env file
+environ.Env.read_env(os.path.join(BASE_DIR, '.dev.env')) # For Dev
+# environ.Env.read_env(os.path.join(BASE_DIR, '.prod.env')) # For Prod
+
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-_ao1@oj*l-1zl_7_%!sql-t@@)9rq4io8ggzur^uyqp83&o1kj'
+SECRET_KEY = env('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = env('DEBUG')
 
 ALLOWED_HOSTS = ["*"]
 
@@ -83,31 +95,15 @@ WSGI_APPLICATION = 'teacher_portal.wsgi.application'
 #     }
 # }
 
-# Postgres db config.
+# Postgres db config from env Dev/Prod
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'djangodb',
-        'USER': 'postgres',
-        # 'PASSWORD': 'admin',
-        'PASSWORD': '@Boss_99@',
-        'HOST': 'localhost',
-        # 'HOST': 'db',
-        'PORT': '5432',
-    }
-}
-
-# For Local Runserver.
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'djangodb',
-        'USER': 'postgres',
-        # 'PASSWORD': 'admin',
-        'PASSWORD': '@Boss_99@',
-        'HOST': 'localhost',
-        # 'HOST': 'db',
-        'PORT': '5432',
+        'NAME': env('NAME'),
+        'USER': env('USER'),
+        'PASSWORD': env('PASSWORD'),
+        'HOST': env('HOST'),
+        'PORT': env('PORT'),
     }
 }
 

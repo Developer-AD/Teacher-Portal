@@ -2,3 +2,4 @@ django
 django-filter
 gunicorn
 psycopg2-binary
+django-environ
