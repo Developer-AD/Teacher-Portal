@@ -35,3 +35,22 @@ docker compose -f docker-compose.prod.yml exec db psql -U postgres -d djangodb
 # Backup.
 -> Create Folder - backup
 docker compose -f docker-compose.prod.yml exec db pg_dump -U postgres djangodb > backup/backup_20250824.sql
+
+
+## Postgresdb in Winows cmd:
+----------------------------
+psql -U postgres
+\l
+\c djangodb
+\dt
+
+
+# Docker Compose - Take Backup & Restore
+----------------------------------------
+Backup inside docker-compose:-
+-------------------------------
+docker compose -f docker-compose.prod.yml exec db pg_dump -U postgres djangodb > backup/backup_20250824.sql
+
+Restore:-
+---------
+psql -U postgres -d djangodb -h localhost -p 5432 -f backup.sql
