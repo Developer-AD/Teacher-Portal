@@ -10,19 +10,18 @@ services:
     depends_on:
       - db
     restart: always
+    env_file:
+      - .dev.env
 
   db:
     image: postgres:17
     restart: always
-    environment:
-      POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: admin
-      POSTGRES_DB: djangodb
+    env_file:
+      - .dev.env
     volumes:
       - pgdb:/var/lib/postgresql/data
     ports:
       - "5432:5432"
-
 
 volumes:
   pgdb:
