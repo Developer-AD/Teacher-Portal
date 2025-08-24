@@ -30,3 +30,8 @@ docker compose -f docker-compose.prod.yml exec db psql -U postgres -d djangodb
 \l
 \c djangodb
 \dt
+
+
+# Backup.
+-> Create Folder - backup
+docker compose -f docker-compose.prod.yml exec db pg_dump -U postgres djangodb > backup/backup_20250824.sql
