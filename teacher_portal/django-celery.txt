@@ -1,0 +1,4 @@
+celery -A teacher_portal worker -l info
+celery -A teacher_portal beat -l info
+
+celery -A teacher_portal worker -l info --pool=solo

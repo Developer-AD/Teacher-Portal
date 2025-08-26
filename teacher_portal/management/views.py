@@ -8,6 +8,7 @@ from django.core.paginator import Paginator
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from .models import Student
 from .filters import StudentFilter
+from .tasks import greet
 
 
 from django.contrib.auth import get_user_model
@@ -60,6 +61,12 @@ def logout_view(request):
     messages.success(request, 'Success!, You have logged out.')
     return redirect('login')
 
+def celery_view(request):
+    print('-'*100)
+    res = greet.delay()
+    print(res)
+    print('-'*100)
+    return HttpResponse('Success')
 
 # #--------------------------------------- category Start ------------------------
 @login_required(login_url='/')
