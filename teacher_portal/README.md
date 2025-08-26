@@ -59,3 +59,12 @@ psql -U postgres -d djangodb -h localhost -p 5432 -f backup.sql
 Restore in Docker Volume:-
 --------------------------
 docker compose exec -T db psql -U postgres -d djangodb < backup/backup_20250824.sql
+
+
+
+
+
+
+
+=================================== DEBUG ===================
+docker compose exec redis redis-cli ping  -- PONG [Correct]

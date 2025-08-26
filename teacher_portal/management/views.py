@@ -63,8 +63,18 @@ def logout_view(request):
 
 def celery_view(request):
     print('-'*100)
-    res = greet.delay()
-    print(res)
+    try:
+            
+        res = greet.delay()
+        print(res)
+
+        result = greet.delay()
+        print(result.id)          # UUID
+        print(result.status)      # e.g. PENDING, STARTED, SUCCESS, FAILURE
+        print(result.get())
+    except Exception as e:
+        print(e)
+        
     print('-'*100)
     return HttpResponse('Success')
 

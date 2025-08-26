@@ -25,6 +25,33 @@ services:
     ports:
       - "5432:5432"
 
+  redis:
+    image: redis:7
+    ports:
+      - "6379:6379"
+
+  celery_worker:
+    build: .
+    command: celery -A teacher_portal worker -l info --pool=solo
+    volumes:
+      - .:/app
+    env_file:
+      - .dev.env
+    depends_on:
+      - redis
+      - db
+
+  celery_beat:
+    build: .
+    command: celery -A teacher_portal beat -l info
+    volumes:
+      - .:/app
+    env_file:
+      - .dev.env
+    depends_on:
+      - redis
+      - db
+
 volumes:
   pgdb:
     name: pgdb
