@@ -51,6 +51,11 @@ Backup inside docker-compose:-
 -------------------------------
 docker compose -f docker-compose.prod.yml exec db pg_dump -U postgres djangodb > backup/backup_20250824.sql
 
-Restore:-
----------
+Restore in Local system:-
+--------------------------
 psql -U postgres -d djangodb -h localhost -p 5432 -f backup.sql
+
+
+Restore in Docker Volume:-
+--------------------------
+docker compose exec -T db psql -U postgres -d djangodb < backup/backup_20250824.sql

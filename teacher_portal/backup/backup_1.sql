@@ -2,7 +2,7 @@
 -- PostgreSQL database dump
 --
 
-\restrict wAb9lu8ocx1k1wrNdKa9Pqmu4IACX2f9n8DMyqPFIxVUu7tY8Oz3NnjUdFQJnHo
+\restrict rd2ALUpfXUbwcZpyUcF6VijDoK7UknYE4d4g3WkB7Uhz0n15PpAUhPkbPo0YNMy
 
 -- Dumped from database version 17.6 (Debian 17.6-1.pgdg13+1)
 -- Dumped by pg_dump version 17.6 (Debian 17.6-1.pgdg13+1)
@@ -380,9 +380,6 @@ COPY public.auth_permission (id, name, content_type_id, codename) FROM stdin;
 --
 
 COPY public.django_admin_log (id, action_time, object_id, object_repr, action_flag, change_message, content_type_id, user_id) FROM stdin;
-1	2025-08-24 15:11:21.249244+00	1	abhishek admin (pgdb - 10)	1	[{"added": {}}]	6	1
-2	2025-08-24 15:11:37.813458+00	2	1 - abhishek	1	[{"added": {}}]	7	1
-3	2025-08-24 15:11:40.743908+00	2	1 - abhishek	2	[]	7	1
 \.
 
 
@@ -406,26 +403,26 @@ COPY public.django_content_type (id, app_label, model) FROM stdin;
 --
 
 COPY public.django_migrations (id, app, name, applied) FROM stdin;
-1	contenttypes	0001_initial	2025-08-24 14:58:01.167939+00
-2	contenttypes	0002_remove_content_type_name	2025-08-24 14:58:01.179155+00
-3	auth	0001_initial	2025-08-24 14:58:01.218772+00
-4	auth	0002_alter_permission_name_max_length	2025-08-24 14:58:01.226359+00
-5	auth	0003_alter_user_email_max_length	2025-08-24 14:58:01.23488+00
-6	auth	0004_alter_user_username_opts	2025-08-24 14:58:01.242495+00
-7	auth	0005_alter_user_last_login_null	2025-08-24 14:58:01.250733+00
-8	auth	0006_require_contenttypes_0002	2025-08-24 14:58:01.253445+00
-9	auth	0007_alter_validators_add_error_messages	2025-08-24 14:58:01.262994+00
-10	auth	0008_alter_user_username_max_length	2025-08-24 14:58:01.270492+00
-11	auth	0009_alter_user_last_name_max_length	2025-08-24 14:58:01.279613+00
-12	auth	0010_alter_group_name_max_length	2025-08-24 14:58:01.28749+00
-13	auth	0011_update_proxy_permissions	2025-08-24 14:58:01.295433+00
-14	auth	0012_alter_user_first_name_max_length	2025-08-24 14:58:01.302967+00
-15	management	0001_initial	2025-08-24 14:58:01.337543+00
-16	admin	0001_initial	2025-08-24 14:58:01.361141+00
-17	admin	0002_logentry_remove_auto_add	2025-08-24 14:58:01.372364+00
-18	admin	0003_logentry_add_action_flag_choices	2025-08-24 14:58:01.406496+00
-19	management	0002_alter_myuser_role	2025-08-24 14:58:01.417587+00
-20	sessions	0001_initial	2025-08-24 14:58:01.428091+00
+1	contenttypes	0001_initial	2025-08-26 16:18:07.630293+00
+2	contenttypes	0002_remove_content_type_name	2025-08-26 16:18:07.63927+00
+3	auth	0001_initial	2025-08-26 16:18:07.677849+00
+4	auth	0002_alter_permission_name_max_length	2025-08-26 16:18:07.686496+00
+5	auth	0003_alter_user_email_max_length	2025-08-26 16:18:07.695714+00
+6	auth	0004_alter_user_username_opts	2025-08-26 16:18:07.704725+00
+7	auth	0005_alter_user_last_login_null	2025-08-26 16:18:07.71365+00
+8	auth	0006_require_contenttypes_0002	2025-08-26 16:18:07.716771+00
+9	auth	0007_alter_validators_add_error_messages	2025-08-26 16:18:07.72669+00
+10	auth	0008_alter_user_username_max_length	2025-08-26 16:18:07.735735+00
+11	auth	0009_alter_user_last_name_max_length	2025-08-26 16:18:07.744455+00
+12	auth	0010_alter_group_name_max_length	2025-08-26 16:18:07.754283+00
+13	auth	0011_update_proxy_permissions	2025-08-26 16:18:07.761868+00
+14	auth	0012_alter_user_first_name_max_length	2025-08-26 16:18:07.768794+00
+15	management	0001_initial	2025-08-26 16:18:07.806286+00
+16	admin	0001_initial	2025-08-26 16:18:07.840542+00
+17	admin	0002_logentry_remove_auto_add	2025-08-26 16:18:07.847804+00
+18	admin	0003_logentry_add_action_flag_choices	2025-08-26 16:18:07.855873+00
+19	management	0002_alter_myuser_role	2025-08-26 16:18:07.865778+00
+20	sessions	0001_initial	2025-08-26 16:18:07.874336+00
 \.
 
 
@@ -434,7 +431,6 @@ COPY public.django_migrations (id, app, name, applied) FROM stdin;
 --
 
 COPY public.django_session (session_key, session_data, expire_date) FROM stdin;
-kx8ewkcpjh1z8fz1hdhvh72hzuh7dxy0	.eJxVjDsOwjAQBe_iGln-b0JJzxmsXa_BAWRLcVIh7k4ipYD2zcx7i4jrUuLa8xwnFmdhxOl3I0zPXHfAD6z3JlOryzyR3BV50C6vjfPrcrh_BwV72WrN1jrFFtg7R4ksox9ABwRUFmy-gVNEachBG8x6DKMCb8BswJMDLz5f03M3Pg:1uqCNy:L7KILCZw2r5K2UXrg2vSnYh0LQrvIb6h4Se43nRJjXk	2025-09-07 15:11:58.024819+00
 \.
 
 
@@ -443,8 +439,6 @@ kx8ewkcpjh1z8fz1hdhvh72hzuh7dxy0	.eJxVjDsOwjAQBe_iGln-b0JJzxmsXa_BAWRLcVIh7k4ipY
 --
 
 COPY public.management_myuser (id, password, last_login, is_superuser, username, first_name, last_name, email, is_staff, is_active, date_joined, role) FROM stdin;
-1	pbkdf2_sha256$1000000$GVSlDNT5dSwnZIpE3sroau$uJzGVB9gH/s/oAQkPrvr93eu4mIpgRkZ3/rpETBQtcA=	2025-08-24 15:11:00.946149+00	t	admin				t	t	2025-08-24 15:09:28.737511+00	1
-2	pbkdf2_sha256$1000000$dbC9FDbXWns9l76EO3mb1Z$bOeJCpJdNMymY6HgK4Ogp/XtD9AM7H14ttsC5pZDyx4=	2025-08-24 15:11:58.02204+00	f	abhishek				f	t	2025-08-24 15:11:37.597105+00	1
 \.
 
 
@@ -469,10 +463,6 @@ COPY public.management_myuser_user_permissions (id, myuser_id, permission_id) FR
 --
 
 COPY public.management_student (id, name, subject, mark) FROM stdin;
-1	abhishek admin	pgdb	10
-2	Abhishek	CS	60
-3	Master	Django	89
-4	Global	CSS	90
 \.
 
 
@@ -501,7 +491,7 @@ SELECT pg_catalog.setval('public.auth_permission_id_seq', 28, true);
 -- Name: django_admin_log_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
-SELECT pg_catalog.setval('public.django_admin_log_id_seq', 3, true);
+SELECT pg_catalog.setval('public.django_admin_log_id_seq', 1, false);
 
 
 --
@@ -529,7 +519,7 @@ SELECT pg_catalog.setval('public.management_myuser_groups_id_seq', 1, false);
 -- Name: management_myuser_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
-SELECT pg_catalog.setval('public.management_myuser_id_seq', 2, true);
+SELECT pg_catalog.setval('public.management_myuser_id_seq', 1, false);
 
 
 --
@@ -543,7 +533,7 @@ SELECT pg_catalog.setval('public.management_myuser_user_permissions_id_seq', 1, 
 -- Name: management_student_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
-SELECT pg_catalog.setval('public.management_student_id_seq', 4, true);
+SELECT pg_catalog.setval('public.management_student_id_seq', 1, false);
 
 
 --
@@ -857,5 +847,5 @@ ALTER TABLE ONLY public.management_myuser_user_permissions
 -- PostgreSQL database dump complete
 --
 
-\unrestrict wAb9lu8ocx1k1wrNdKa9Pqmu4IACX2f9n8DMyqPFIxVUu7tY8Oz3NnjUdFQJnHo
+\unrestrict rd2ALUpfXUbwcZpyUcF6VijDoK7UknYE4d4g3WkB7Uhz0n15PpAUhPkbPo0YNMy
 
