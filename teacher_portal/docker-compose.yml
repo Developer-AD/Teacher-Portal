@@ -16,12 +16,13 @@ services:
       - .dev.env
 
   db:
-    image: postgres:17
+    image: postgres:15
     restart: always
     env_file:
       - .dev.env
     volumes:
       - pgdb:/var/lib/postgresql/data
+      - ./backup:/backup
     ports:
       - "5432:5432"
 

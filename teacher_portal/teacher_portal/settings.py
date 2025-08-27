@@ -3,11 +3,7 @@ import os
 import environ
 
 # setup env variables.
-env = environ.Env(
-    # set casting, default value
-    DEBUG=(bool, False),
-    TIME_ZONE=(str, "Asia/Kolkata")
-)
+env = environ.Env(DEBUG=(bool, False))
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -118,11 +114,12 @@ AUTH_PASSWORD_VALIDATORS = [
 
 LANGUAGE_CODE = 'en-us'
 
-TIME_ZONE = 'UTC'
 
 USE_I18N = True
 
-USE_TZ = True
+TIME_ZONE = 'Asia/Kolkata'
+USE_TZ = False
+# USE_TZ = True
 
 
 # Static files (CSS, JavaScript, Images)
@@ -144,15 +141,6 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 AUTH_USER_MODEL = 'management.MyUser'
 
-# print(f"*"*100)
-# print(f"================: Print ENV Var :=================")
-# print(f"DEBUG - {DEBUG}")
-# print(f"NAME - {env('POSTGRES_DB')}")
-# print(f"USER - {env('POSTGRES_USER')}")
-# print(f"PASSWORD - {env('POSTGRES_PASSWORD')}")
-# print(f"HOST - {env('POSTGRES_HOST')}")
-# print(f"PORT - {env('POSTGRES_PORT')}")
-# print(f"*"*100)
 
 
 # ----------------------------- CELERY SETTINGS -----------------------
@@ -167,3 +155,15 @@ CELERY_RESULT_SERIALIZER = env("CELERY_RESULT_SERIALIZER", default="json")
 
 CELERY_TIMEZONE = env("CELERY_TIMEZONE", default="Asia/Kolkata")
 CELERY_ENABLE_UTC = env.bool("CELERY_ENABLE_UTC", default=False)
+
+print(f"*"*100)
+print(f"================: Print ENV Var :=================")
+print(f"DEBUG - {DEBUG}")
+print(f"NAME - {env('POSTGRES_DB')}")
+print(f"USER - {env('POSTGRES_USER')}")
+print(f"PASSWORD - {env('POSTGRES_PASSWORD')}")
+print(f"HOST - {env('POSTGRES_HOST')}")
+print(f"PORT - {env('POSTGRES_PORT')}")
+print(f"TIME_ZONE - {TIME_ZONE}")
+print(f"USE_TZ - {USE_TZ}")
+print(f"*"*100)

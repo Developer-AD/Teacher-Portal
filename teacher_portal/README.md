@@ -49,7 +49,7 @@ psql -U postgres
 ----------------------------------------
 Backup inside docker-compose:-
 ------------------------------
-docker compose -f docker-compose.prod.yml exec db pg_dump -U postgres djangodb > backup/backup_20250824.sql
+docker compose -f docker-compose.prod.yml exec db pg_dump -U postgres djangodb > backup/backup_raw1.sql
 
 Restore in Local system:-
 -------------------------
@@ -61,6 +61,11 @@ Restore in Docker Volume:-
 docker compose exec -T db psql -U postgres -d djangodb < backup/backup_20250824.sql
 
 
+<!-- After mount backup. -->
+Restored the custom backup with this way backup in PGAdmin4
+-> docker compose -f docker-compose.prod.yml exec db pg_dump -U postgres -F c -f /backup/backup2.custom djangodb 
+
+
 
 
 
@@ -68,3 +73,12 @@ docker compose exec -T db psql -U postgres -d djangodb < backup/backup_20250824.
 
 =================================== DEBUG ===================
 docker compose exec redis redis-cli ping  -- PONG [Correct]
+
+docker-compose exec web python manage.py migrate
+
+
+# Fixing db errors;
+don't run makemigrations and migrate command in entrypoint.
+-After web up run inside of docker migrate 
+-for django celry also it may give error at first no problem once it up then run using
+exec cmd.
